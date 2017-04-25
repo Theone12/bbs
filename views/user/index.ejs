@@ -1,0 +1,122 @@
+<%- include header %>
+
+
+
+	<div id="home" class="home" style="">
+		<div class="w">
+			<div class="title">
+				<ul class="clearfix">
+					<li class="fl">今日：<em>6</em> </li>
+					<li class="fl">昨日：<em>25</em> </li>
+					<li class="fl">最高日：<em>55332</em> </li>
+					<li class="fl">帖子：<em>2342345356</em> </li>
+					<li class="fl">会员：<em>223424534</em> </li>
+					<li class="fl">新会员：<em>4354544</em> </li>
+				</ul>
+			</div>
+			<% for(item in bk) { %>
+			<div class="content">
+				<div class="caption clearfix">
+					<span class="fl"><%= bk[item].bkname %></span>
+					<span class="fr">分栏版主：<em><%= bk[item].bkadmin %></em></span>
+				</div>
+				<div class="item-box clearfix">
+
+					<% for(sitem in zhuti) { %>
+						<% if(zhuti[sitem].bk_id == bk[item].id) { %>
+							<div class="item fl">
+								<div class="fl img-box">
+									<img src="/user/images/old.gif" alt="">
+								</div>
+								<div class="fl ss">
+									<h4><a href="/users/zhuti?id=<%= zhuti[sitem].id %>"><%= zhuti[sitem].name %></a></h4>
+									<p>
+									<!-- 主题：<em>123456</em> ,  -->帖子：<em><%= zhuti[sitem].tiezi_num %></em>
+									<br>
+									最后回复：2016-05-09
+									</p>
+								</div>
+							</div>
+						<% } %>
+					<% } %>
+
+
+				</div>
+			</div>
+			<% } %>
+		</div>
+	</div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/user/js/jquery.pagination.js"></script>
+<script>
+	$(function() {
+		$('#search').click(function(event) {
+			/* Act on the event */
+			$(this).hide();
+			$("#inputBox").css({
+				width: '250px'
+			});
+			$("#input").focus();
+		});
+		$("#input").blur(function() {
+			$("#inputBox").css({
+				width: '0px'
+			});
+			$("#search").show();
+		});
+		$("form").submit(function(event) {
+			event.preventDefault();
+		});
+		var left,now_left,left_val;
+		$("#arrow").mousedown(function(event) {
+			left = event.pageX;
+			console.log(left);
+			$(document).on('mousemove', moveH);
+		});
+		$(document).on('mouseup', function () {
+			$(document).off('mousemove', moveH);
+			if (parseInt(left_val) >= 0) {
+				console.log('通过了');
+				$("#blueVal").text('验证通过!');
+			} else {
+				$("#blue").css({
+					left: '-270px',
+				});
+			}
+		})
+		function moveH (event) {
+			event.preventDefault();
+			now_left = event.pageX;
+			left_val = (now_left - left - 270) + 'px';
+			console.log(left_val);
+			if (parseInt(left_val) <= 0) {
+				$("#blue").css({
+					left: left_val,
+				});
+			} else {
+				$("#blue").css({
+					left: '0px',
+				});
+				$(document).off('mousemove', moveH);
+			}
+		}
+	})
+	$(function() {
+    $("#Pagination").pagination(25, {
+      num_edge_entries: 0,
+      num_display_entries: 5,
+      current_page: 1,
+      callback: function (page) {
+          console.log(page);
+      },
+      items_per_page:10,
+      prev_text: '上一页',
+      next_text: '下一页',
+      prev_show_always: true,
+      next_show_always: true
+    });
+   })
+</script>
+</html>

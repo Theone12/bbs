@@ -1,0 +1,114 @@
+<%- include header %>
+	<div class="w register" id="loginBox" style="">
+		<h3>登录</h3>
+		<form action="/users/logi" id="form" method="get">
+			<p>
+				<label for="user">用户名：</label>
+				<input type="text" id="user" name="name">
+				<span class="addon" style="display: none;">不能为空</span>
+			</p>
+			<p>
+				<label for="pass">密码：</label>
+				<input type="text" id="pass" name="password">
+				<span class="addon" style="display: none;">不能为空</span>
+			</p>
+			<div class="sure">
+				<label for="">滑块验证：</label>
+				<div class="kuai">
+					<div class="blue" id="blue">
+						<span id="blueVal"></span>
+						<div class="arrow" id="arrow">&raquo;</div>
+					</div>
+					<div class="gray">请按住滑块，拖动到最右边</div>
+				</div>
+			</div>
+			<p>
+				<input type="submit" value="提交" class="submit">
+			</p>
+		</form>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/user/js/jquery.pagination.js"></script>
+<script>
+	$(function() {
+		$('#search').click(function(event) {
+			/* Act on the event */
+			$(this).hide();
+			$("#inputBox").css({
+				width: '250px'
+			});
+			$("#input").focus();
+		});
+		$("#input").blur(function() {
+			$("#inputBox").css({
+				width: '0px'
+			});
+			$("#search").show();
+		});
+		var left,now_left,left_val;
+		$("#arrow").mousedown(function(event) {
+			left = event.pageX;
+			console.log(left);
+			$(document).on('mousemove', moveH);
+		});
+		$(document).on('mouseup', function () {
+			$(document).off('mousemove', moveH);
+			if (parseInt(left_val) >= 0) {
+				console.log('通过了');
+				$("#blueVal").text('验证通过!');
+			} else {
+				$("#blue").css({
+					left: '-270px',
+				});
+			}
+		})
+		function moveH (event) {
+			event.preventDefault();
+			now_left = event.pageX;
+			left_val = (now_left - left - 270) + 'px';
+			console.log(left_val);
+			if (parseInt(left_val) <= 0) {
+				$("#blue").css({
+					left: left_val,
+				});
+			} else {
+				$("#blue").css({
+					left: '0px',
+				});
+				$(document).off('mousemove', moveH);
+			}
+		}
+	})
+	$(function() {
+    $("#Pagination").pagination(25, {
+      num_edge_entries: 0,
+      num_display_entries: 5,
+      current_page: 1,
+      callback: function (page) {
+          console.log(page);
+      },
+      items_per_page:10,
+      prev_text: '上一页',
+      next_text: '下一页',
+      prev_show_always: true,
+      next_show_always: true
+    });
+   })
+
+	$(function() {
+		$("#form").focusin(function(event) {
+			$(event.target).next().html('');
+			$(event.target).show();
+		});
+		$("#form").focusout(function (event) {
+			var val = $(event.target).val();
+			if (val == '') {
+				$(event.target).next().html('不能为空');
+				$(event.target).next().show();
+			}
+		});
+
+	})
+</script>
+</html>

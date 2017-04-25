@@ -1,0 +1,143 @@
+<%- include header %>
+	<div class="w register" style="">
+		<h3>欢迎注册成为  官方论坛会员</h3>
+		<form action="" id="form">
+			<p>
+				<label for="user">用户名：</label>
+				<input type="text" id="user" name="name">
+				<span class="addon" style="display: none;">不能为空</span>
+			</p>
+			<p>
+				<label for="pass">密码：</label>
+				<input type="text" id="pass" name="password">
+				<span class="addon" style="display: none;">不能为空</span>
+			</p>
+			<p>
+				<label for="sure">确认密码：</label>
+				<input type="text" id="sure">
+				<span class="addon" style="display: none;">不能为空</span>
+			</p>
+			<p>
+				<input type="submit" value="提交" class="submit" id="submit">
+			</p>
+		</form>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/user/js/jquery.pagination.js"></script>
+<script>
+	$(function() {
+		$('#search').click(function(event) {
+			/* Act on the event */
+			$(this).hide();
+			$("#inputBox").css({
+				width: '250px'
+			});
+			$("#input").focus();
+		});
+		$("#input").blur(function() {
+			$("#inputBox").css({
+				width: '0px'
+			});
+			$("#search").show();
+		});
+		$("form").submit(function(event) {
+			event.preventDefault();
+		});
+		var left,now_left,left_val;
+		$("#arrow").mousedown(function(event) {
+			left = event.pageX;
+			console.log(left);
+			$(document).on('mousemove', moveH);
+		});
+		$(document).on('mouseup', function () {
+			$(document).off('mousemove', moveH);
+			if (parseInt(left_val) >= 0) {
+				console.log('通过了');
+				$("#blueVal").text('验证通过!');
+			} else {
+				$("#blue").css({
+					left: '-270px',
+				});
+			}
+		})
+		function moveH (event) {
+			event.preventDefault();
+			now_left = event.pageX;
+			left_val = (now_left - left - 270) + 'px';
+			console.log(left_val);
+			if (parseInt(left_val) <= 0) {
+				$("#blue").css({
+					left: left_val,
+				});
+			} else {
+				$("#blue").css({
+					left: '0px',
+				});
+				$(document).off('mousemove', moveH);
+			}
+		}
+	});
+	$(function() {
+		$("#form").focusin(function(event) {
+			$(event.target).next().html('');
+			$(event.target).show();
+		});
+		$("#form").focusout(function (event) {
+			var val = $(event.target).val();
+			if (val == '') {
+				$(event.target).next().html('不能为空');
+				$(event.target).next().show();
+			} else {
+				if ($(event.target).attr('id') == 'user') {
+					$.ajax({
+						url: '/users/isRepeat',
+						type: 'get',
+						dataType: 'json',
+						data: {"user": val},
+						success: function (data) {
+							if (data.result == 1) {
+								$(event.target).next().html('该用户名已经被注册了');
+								$(event.target).next().show();
+							}
+						}
+					});
+				} else if ($(event.target).attr('id') == 'sure') {
+					if ($("#sure").val() !== $("#pass").val()) {
+						$(event.target).next().html('两次密码输入不一致');
+						$(event.target).next().show();
+					}
+				}
+			}
+		});
+		$("#submit").click(function () {
+			var addons = $(".addon");
+			for (var i = 0; i < addons.length; i++) {
+				if (addons.eq(i).text() != '') {
+					return;
+				}
+			}
+			console.log($("#form").serialize());
+			$.ajax({
+				url: '/users/regi',
+				type: 'get',
+				dataType: 'json',
+				data: $("#form").serialize(),
+				success: function (data) {
+					console.log(data);
+					if (data.result == 0) {
+						alert('注册失败');
+					} else if(data.result == 1){
+						alert('注册成功！');
+					}
+				},
+				error: function (err) {
+
+				}
+			});
+			
+		})
+
+	})
+</script>
+</html>

@@ -1,0 +1,20 @@
+.box{
+	margin-top: 20px;
+	background-color: #fff;
+	width: 70%;
+}
+.box .subject{
+	padding: 10px;
+	border-bottom: 1px solid #666;
+}
+.box .subject .title{
+	padding: 5px 0;
+}
+.box .subject .title a{
+	font-size: 25px;
+	color: pink;
+}
+.box .subject .info{
+	color: #666;
+	font-size: 12px;
+}

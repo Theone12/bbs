@@ -1,0 +1,90 @@
+@charset "utf-8";
+/*清除浏览器的默认行为*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, 
+h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, 
+big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, 
+small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, 
+fieldset, form, label, legend, table, caption, tbody, tfoot, 
+thead, tr, th, td ,header,footer,section,aside,input{ 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0; 
+    font-weight: inherit; 
+    font-style: inherit; 
+    font-size: 100%; 
+    font-family: inherit; 
+    vertical-align: baseline; 
+    line-height: 1.42857143;
+    box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+	vertical-align: top;
+    color: #6a6a6a;
+}
+img{
+    vertical-align: middle;
+    outline: none;
+    border: none;
+}
+a img, iframe { 
+    border: none; 
+}
+ol, ul { 
+    list-style: none; 
+}
+/*浮动*/
+.clearfix:after { 
+    content: "."; 
+    display: block; 
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    clear: both; 
+    visibility: hidden; 
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.cb{
+    clear: both;
+}
+/*版心*/
+.w{
+    width: 1200px;
+    margin: 0 auto;
+}
+.tc{
+    text-align: center;
+}
+.tl{
+    text-align: left;
+}
+.tr{
+    text-align: right;
+}
+.none{
+    display: none;
+}
+.show-b{
+    display: block;
+}
+.show-inb{
+    display: inline-block;
+}
+.show-in{
+    display: inline;
+}
+.pr{
+    position: relative;
+}
+.pa{
+    position: absolute;
+}
+.pf{
+    position: fixed;
+}

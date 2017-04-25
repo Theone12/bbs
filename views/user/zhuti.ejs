@@ -1,0 +1,118 @@
+<%- include header %>	
+	<link rel="stylesheet" href="/user/style/tiezi.css">
+	<div id="tiezi" class="tiezi">
+		<div class="router w">
+			<a href="/users/home"><em class="fangzi"></em>首页</a>
+			<em>&gt;</em>
+			<a href=""><%= bkname %></a>
+			<em>&gt;</em>
+			<a href="#"><%= zhutiname %></a>
+		</div>
+		<div class="content w clearfix">
+			<div class="fl left">
+				<div class="caption">
+					<h4><%= zhutiname %></h4>
+					<p>今日：0 主题：574 总帖：<%= tiezi_num %></p>
+					<p>版主：<%= bkadmin %></p>
+					<p><%= zhutiname %> 零距离接触, 最新动态……</p>
+					<div class="tt">
+						<a href="/users/fatie/<%= zt_id %>" class="btn">发帖</a>
+						<div id="Pagination" class="pagination fr"></div>
+					</div>
+					<div class="">
+						
+					</div>
+				</div>
+			</div>
+			<div class="fl center"></div>
+			<div class="fl right"></div>
+		</div>
+		<div class="w">
+			<div class="box">
+				<% for(index in tiezi) { %>
+				<div class="subject">
+					<p class="title"><a href="/users/tiezi?id=<%= tiezi[index].id %>"><%= tiezi[index].title %></a></p>
+					<p class="info">
+						楼主：<a href=""><%= tiezi[index].author %></a>
+						<span><%= tiezi[index].edittime %></span>
+						最后回复：<span>20180322</span>
+					</p>
+				</div>
+				<% } %>
+			</div>
+			
+		</div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/user/js/jquery.pagination.js"></script>
+<script>
+	$(function() {
+		$('#search').click(function(event) {
+			/* Act on the event */
+			$(this).hide();
+			$("#inputBox").css({
+				width: '250px'
+			});
+			$("#input").focus();
+		});
+		$("#input").blur(function() {
+			$("#inputBox").css({
+				width: '0px'
+			});
+			$("#search").show();
+		});
+		$("form").submit(function(event) {
+			event.preventDefault();
+		});
+		var left,now_left,left_val;
+		$("#arrow").mousedown(function(event) {
+			left = event.pageX;
+			console.log(left);
+			$(document).on('mousemove', moveH);
+		});
+		$(document).on('mouseup', function () {
+			$(document).off('mousemove', moveH);
+			if (parseInt(left_val) >= 0) {
+				console.log('通过了');
+				$("#blueVal").text('验证通过!');
+			} else {
+				$("#blue").css({
+					left: '-270px',
+				});
+			}
+		})
+		function moveH (event) {
+			event.preventDefault();
+			now_left = event.pageX;
+			left_val = (now_left - left - 270) + 'px';
+			console.log(left_val);
+			if (parseInt(left_val) <= 0) {
+				$("#blue").css({
+					left: left_val,
+				});
+			} else {
+				$("#blue").css({
+					left: '0px',
+				});
+				$(document).off('mousemove', moveH);
+			}
+		}
+	})
+	$(function() {
+    $("#Pagination").pagination(25, {
+      num_edge_entries: 0,
+      num_display_entries: 5,
+      current_page: 1,
+      callback: function (page) {
+          console.log(page);
+      },
+      items_per_page:10,
+      prev_text: '上一页',
+      next_text: '下一页',
+      prev_show_always: true,
+      next_show_always: true
+    });
+   })
+</script>
+</html>

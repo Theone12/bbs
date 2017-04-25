@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bbs</title>
+	<link rel="stylesheet" href="/user/style/myreset.css">
+	<link rel="stylesheet" href="/user/style/index.css">
+	<link rel="stylesheet" href="/user/style/pagination.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<header class="header">
+		<div class="w">
+			<a href="">
+				<div class="img-box">
+					<img src="" alt="">
+				</div>
+			</a>
+			<ul class="clearfix fl">
+				<li class="fl"><a href="/users/home" class="menu-item <% if(menu == 'home') { %> active <% } %>">首页</a></li>
+				<li class="fl"><a href="#" class="menu-item <% if(menu == 'zhuti') { %> active <% } %>">帖子页面</a></li>
+				<li class="fl"><a href="#" class="menu-item <% if(menu == 'fatie') { %> active <% } %>" >发帖</a></li>
+				<li class="fl"><a href="#" class="menu-item">插件与模板</a></li>
+				<li class="fl"><a href="#" class="menu-item">1元商业授权</a></li>
+				<li class="fl"><a href="#" class="menu-item">1键部署</a></li>
+			</ul>
+			<div class="fr">
+				<div class="right-box clearfix">
+					<em class="img fl" id="search"></em>
+					<div class="input-box fl" id="inputBox">
+						<em class="search-icon fl"></em>
+						<input type="text" id="input" class="fl input" placeholder="搜索其实很简单">
+					</div>
+					<a href="" class="fl" <% if(!name) { %> style="display:none;" <% } %>>欢迎你 , <%= name %>  </a>
+					<a href="/users/logout" <% if(!name) { %> style="display:none;" <% } %>>退出登录</a>
+					<div class="fl" <% if(name) { %> style="display:none;" <% } %> >
+						<a href="/users/login" class="fl">登录</a>
+						<a href="/users/register" class="fl">注册</a>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</header>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		html,body{
+			height: 100%;
+		}
+		div{
+			border: 1px solid black;
+		}
+		.A{
+			height: 30px;
+			width: 100%;
+		}
+		.B{
+			float: left;
+			width: 150px;
+			height: calc(100% - 40px);
+		}
+		.C{
+			float: right;
+			width: calc(100% - 150px);
+			height: calc(100% - 40px);
+		}
+		.D{
+			height: 10px;
+			width: 100%;
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<div class="A">A</div>
+	<div class="B">B</div>
+	<div class="C">C</div>
+	<div class="D"></div>
+</body>
+</html>
