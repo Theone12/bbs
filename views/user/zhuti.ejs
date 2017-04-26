@@ -29,7 +29,7 @@
 		</div>
 		<div class="w">
 			<div class="box">
-				<% for(index in tiezi) { %>
+				<!-- <% for(index in tiezi) { %>
 				<div class="subject">
 					<p class="title"><a href="/users/tiezi?id=<%= tiezi[index].id %>"><%= tiezi[index].title %></a></p>
 					<p class="info">
@@ -38,10 +38,14 @@
 						最后回复：<span>20180322</span>
 					</p>
 				</div>
-				<% } %>
+				<% } %> -->
 			</div>
 			
 		</div>
+	</div>
+	<link rel="stylesheet" href="/user/style/footer.css">
+	<div class="footer">
+		这里是底部
 	</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -100,14 +104,35 @@
 		}
 	})
 	$(function() {
-    $("#Pagination").pagination(25, {
+    $("#Pagination").pagination(<%= length %>, {
       num_edge_entries: 0,
       num_display_entries: 5,
-      current_page: 1,
-      callback: function (page) {
-          console.log(page);
+      current_page: 0,
+      callback: function (page, type) {
+          console.log(page, type);
+          $.ajax({
+          	url: '/users/getData',
+          	type: 'get',
+          	dataType: 'json',
+          	data: {
+          		page: page,
+          		zhuti_id: <%= zt_id %>
+          	},
+          	success: function (data) {
+          		var html = '';
+          		for (var i = 0; i < data.length; i++) {
+          			html += '<div class="subject"><p class="title"><a href="/users/tiezi?id=' + data[i].id + '">' + data[i].title + '</a></p><p class="info">楼主：<a href="">' + data[i].author + '</a><span>' + data[i].edittime + '</span>最后回复：<span>20180322</span></p></div>';
+          		}
+          		$(".w > .box").html(html);
+          		
+          	},
+          	error: function (err) {
+
+          	}
+          });
+          
       },
-      items_per_page:10,
+      items_per_page:2,
       prev_text: '上一页',
       next_text: '下一页',
       prev_show_always: true,

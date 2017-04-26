@@ -71,9 +71,8 @@ router.get('/zhuti', function (req, res, next) {
 		console.log(id);
 		console.log('select * from tiezi where zhuti_id = 12');
 		db.query('select * from tiezi where zhuti_id = ?',[id],function (err, data1, fields){
-			console.log(data1);
 			para['tiezi'] = data1;
-			console.log(para);
+			para['length'] = data1.length;
 			if (data.length == 1) {
 				res.render('user/zhuti', para);
 			} else {
@@ -83,6 +82,18 @@ router.get('/zhuti', function (req, res, next) {
 			
 	})
 		
+});
+router.get('/getData', function (req, res, next) {
+	var page = req.query.page;
+	var zhuti_id = req.query.zhuti_id;
+	page = page * 2;
+	console.log(zhuti_id, page);
+	db.query('select * from tiezi where zhuti_id = ? limit ?, 2', [zhuti_id, page], function (err, data, fields) {
+		if (err) {
+			throw err;
+		}
+		res.json(data);
+	})
 });
 
 router.get('/isRepeat', function (req, res, next) {
